@@ -58,7 +58,7 @@ body {
   width: 1126px;
   max-width: 100%;
   margin: 0 auto;
-  text-align: center;
+  text-align: left;
   border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
@@ -66,15 +66,11 @@ body {
   box-sizing: border-box;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
+
 
 h1 {
   font-size: 56px;
+  text-align: center;
   letter-spacing: -1.68px;
   margin: 32px 0;
   @media (max-width: 1024px) {
@@ -108,4 +104,35 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
+}
+
+/* INSTRUCTIONS */
+
+.instructions {
+  width: 100%;
+  text-align: left;
+}
+
+.instructions h2 {
+  text-align: left;
+}
+
+.instructions ol {
+  margin: 0;
+  padding-left: 2rem;
+  text-align: left;
+}
+
+.instructions li {
+  margin-bottom: 0.75rem;
+}
+
+/* RECIPES */
+
+.recipe {
+  text-align: left;
+}
+
+.recipe h1 {
+  text-align: center;
 }
