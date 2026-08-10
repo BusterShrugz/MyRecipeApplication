@@ -3,6 +3,7 @@ import { useState } from "react";
 import IngredientList from "../appComponents/IngredientList";
 import Instructions from "../appComponents/Instructions";
 import { deleteRecipe } from "../services/recipeService";
+import PixelButton from "../appComponents/PixelButton";
 
 const Recipe = ({ recipe, onBack, onDeleted }) => {
     const [deleting, setDeleting] = useState(false);
@@ -36,9 +37,9 @@ const Recipe = ({ recipe, onBack, onDeleted }) => {
 
     return (
         <main className="recipe">
-            <button onClick={onBack}>
+            <PixelButton onClick={onBack}>
                 ← Back to Recipes
-            </button>
+            </PixelButton>
 
             <h1>{recipe.name}</h1>
 
@@ -71,12 +72,13 @@ const Recipe = ({ recipe, onBack, onDeleted }) => {
                 instructions={recipe.instructions}
             />
 
-            <button
+            <PixelButton
                 onClick={handleDelete}
                 disabled={deleting}
+                variant="danger"
             >
                 {deleting ? "Deleting..." : "Delete Recipe"}
-            </button>
+            </PixelButton>
         </main>
     );
 };

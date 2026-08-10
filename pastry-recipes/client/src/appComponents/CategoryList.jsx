@@ -1,3 +1,5 @@
+import PixelButton from "./PixelButton";
+
 const categories = [
     "All",
     "Cakes",
@@ -14,7 +16,7 @@ const CategoryList = ({ selectedCategory, onSelectCategory }) => {
     return (
         <nav className="category-list">
             {categories.map((category) => (
-                <button
+                <PixelButton
                     key={category}
                     className={
                         selectedCategory === category
@@ -24,7 +26,7 @@ const CategoryList = ({ selectedCategory, onSelectCategory }) => {
                     onClick={() => onSelectCategory(category)}
                 >
                     {category}
-                </button>
+                </PixelButton>
             ))}
         </nav>
     );

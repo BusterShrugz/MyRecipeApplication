@@ -2,6 +2,8 @@ import { useState } from "react";
 
 import RecipeForm from "../appComponents/RecipeForm";
 import { createRecipe } from "../services/recipeService";
+import PixelButton from "../appComponents/PixelButton";
+
 
 const CreateRecipe = ({ onBack }) => {
     const [submitting, setSubmitting] = useState(false);
@@ -33,18 +35,18 @@ const CreateRecipe = ({ onBack }) => {
                     Your recipe was successfully saved.
                 </p>
 
-                <button onClick={onBack}>
+                <PixelButton onClick={onBack}>
                     Back to Recipes
-                </button>
+                </PixelButton>
             </main>
         );
     }
 
     return (
         <main className="create-recipe">
-            <button onClick={onBack}>
+            <PixelButton onClick={onBack}>
                 ← Back to Recipes
-            </button>
+            </PixelButton>
 
             {error && (
                 <p className="form-error">

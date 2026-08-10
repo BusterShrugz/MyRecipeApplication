@@ -1,3 +1,5 @@
+import PixelButton from "./PixelButton";
+
 const RecipeCard = ({ recipe, onClick }) => {
     return (
         <article className="recipe-card">
@@ -11,9 +13,9 @@ const RecipeCard = ({ recipe, onClick }) => {
                 Yield: {recipe.yield.quantity} {recipe.yield.unit}
             </p>
 
-            <button onClick={() => onClick(recipe)}>
+            <PixelButton onClick={() => onClick(recipe)}>
                 View Recipe
-            </button>
+            </PixelButton>
         </article>
     );
 };

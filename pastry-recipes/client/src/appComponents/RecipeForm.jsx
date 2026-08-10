@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PixelButton from "./PixelButton";
 
 const categories = [
     "Cakes",
@@ -246,22 +247,22 @@ const RecipeForm = ({ onSubmit, submitting = false }) => {
                         />
 
                         {ingredients.length > 1 && (
-                            <button
+                            <PixelButton
                                 type="button"
                                 onClick={() => removeIngredient(index)}
                             >
                                 Remove
-                            </button>
+                            </PixelButton>
                         )}
                     </div>
                 ))}
 
-                <button
+                <PixelButton
                     type="button"
                     onClick={addIngredient}
                 >
                     + Add Ingredient
-                </button>
+                </PixelButton>
             </section>
 
             <section className="form-section">
@@ -287,30 +288,30 @@ const RecipeForm = ({ onSubmit, submitting = false }) => {
                         />
 
                         {instructions.length > 1 && (
-                            <button
+                            <PixelButton
                                 type="button"
                                 onClick={() => removeInstruction(index)}
                             >
                                 Remove
-                            </button>
+                            </PixelButton>
                         )}
                     </div>
                 ))}
 
-                <button
+                <PixelButton
                     type="button"
                     onClick={addInstruction}
                 >
                     + Add Step
-                </button>
+                </PixelButton>
             </section>
 
-            <button
+            <PixelButton
                 type="submit"
                 disabled={submitting}
             >
                 {submitting ? "Saving..." : "Save Recipe"}
-            </button>
+            </PixelButton>
         </form>
     );
 };

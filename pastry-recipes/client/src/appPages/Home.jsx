@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getRecipes } from "../services/recipeService";
 import RecipeList from "../appComponents/RecipeList";
 import CategoryList from "../appComponents/CategoryList";
+import PixelButton from "../appComponents/PixelButton";
 
 const Home = ({ onSelectRecipe, onCreateRecipe }) => {
     const [recipes, setRecipes] = useState([]);
@@ -46,9 +47,9 @@ const Home = ({ onSelectRecipe, onCreateRecipe }) => {
             <div className="home-header">
                 <h1>My Pastry Recipes</h1>
 
-                <button onClick={onCreateRecipe}>
+                <PixelButton onClick={onCreateRecipe}>
                     + Create Recipe
-                </button>
+                </PixelButton>
             </div>
 
             <CategoryList

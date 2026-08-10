@@ -220,44 +220,30 @@ code {
   color: var(--accent);
 }
 
-.recipe-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  padding: 0 24px;
-}
+/*.recipe-list {*/
+/*  display: grid;*/
+/*  grid-template-columns: repeat(3, 1fr);*/
+/*  gap: 24px;*/
+/*  padding: 0 24px;*/
+/*}*/
 
-.recipe-card {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 24px;
-  background: var(--bg);
-  box-shadow: var(--shadow);
-}
+/*.recipe-card {*/
+/*  border: 1px solid var(--border);*/
+/*  border-radius: 12px;*/
+/*  padding: 24px;*/
+/*  background: var(--bg);*/
+/*  box-shadow: var(--shadow);*/
+/*}*/
 
-.recipe-card h2 {
-  margin-bottom: 4px;
-}
+/*.recipe-card h2 {*/
+/*  margin-bottom: 4px;*/
+/*}*/
 
-.recipe-category {
-  color: var(--accent);
-  margin-bottom: 12px;
-}
+/*.recipe-category {*/
+/*  color: var(--accent);*/
+/*  margin-bottom: 12px;*/
+/*}*/
 
-.recipe-card button {
-  margin-top: 16px;
-  padding: 8px 14px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--bg);
-  color: var(--text-h);
-  cursor: pointer;
-}
-
-.recipe-card button:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
 
 /* RECIPE FORM */
 
@@ -288,19 +274,6 @@ code {
 
 .form-row > * {
   flex: 1;
-}
-
-.recipe-form input,
-.recipe-form select,
-.recipe-form textarea {
-  box-sizing: border-box;
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid var(--accent-bg);
-  border-radius: 6px;
-  background: var(--accent-bg);
-  color: var(--text-h);
-  font: inherit;
 }
 
 .recipe-form textarea {
@@ -365,5 +338,200 @@ code {
 
   .home-header {
     flex-direction: column;
+  }
+}
+
+/* =========================================================
+   PIXEL BUTTONS
+========================================================= */
+
+.pixel-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 180px;
+  height: 44px;
+  padding: 0;
+
+  border: 2px solid #575969;
+  border-radius: 4px;
+
+  background-color: #24252c;
+  background-image:
+          repeating-linear-gradient(
+                  0deg,
+                  #181a29,
+                  #181a29 2px,
+                  #202436 2px,
+                  #202436 4px
+          );
+
+  color: #76b3fa;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  font-weight: 300;
+
+  cursor: pointer;
+
+  transition:
+          border-color 200ms ease,
+          color 200ms ease,
+          box-shadow 200ms ease,
+          transform 100ms ease;
+
+  overflow: hidden;
+}
+
+/* Subtle pixel texture */
+.pixel-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image:
+          repeating-linear-gradient(
+                  90deg,
+                  transparent 0,
+                  transparent 3px,
+                  rgba(118, 179, 250, 0.04) 3px,
+                  rgba(118, 179, 250, 0.04) 4px
+          );
+
+  pointer-events: none;
+}
+
+/* Keep text centered and above the texture */
+.pixel-button-text {
+  position: relative;
+  z-index: 2;
+
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   HOVER GLOW
+========================================================= */
+
+.pixel-button:hover {
+  border-color: #76b3fa;
+  color: #9dccff;
+
+  box-shadow:
+          0 0 8px rgba(7, 99, 247, 0.5),
+          0 0 20px rgba(7, 99, 247, 0.35),
+          inset 0 0 12px rgba(7, 99, 247, 0.35);
+}
+
+/* =========================================================
+   CLICK / FLASH
+========================================================= */
+
+.pixel-button:active {
+  transform: scale(0.97);
+
+  animation: pixel-button-flash 600ms ease-out;
+}
+
+@keyframes pixel-button-flash {
+  0% {
+    border-color: #76b3fa;
+    color: #ffffff;
+
+    box-shadow:
+            0 0 8px #76b3fa,
+            0 0 25px #0763f7,
+            0 0 45px rgba(118, 179, 250, 0.8),
+            inset 0 0 20px #0763f7;
+  }
+
+  100% {
+    border-color: #575969;
+    color: #76b3fa;
+
+    box-shadow:
+            0 0 0 transparent,
+            inset 0 0 0 transparent;
+  }
+}
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.pixel-button:focus-visible {
+  outline: none;
+
+  border-color: #76b3fa;
+
+  box-shadow:
+          0 0 10px rgba(7, 99, 247, 0.6),
+          inset 0 0 12px rgba(7, 99, 247, 0.4);
+}
+
+/* =========================================================
+   DISABLED
+========================================================= */
+
+.pixel-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* =========================================================
+   DANGER BUTTON
+========================================================= */
+
+.pixel-button-danger {
+  color: #ff6b6b;
+}
+
+.pixel-button-danger:hover {
+  border-color: #ff6b6b;
+  color: #ff8585;
+
+  box-shadow:
+          0 0 8px rgba(255, 70, 70, 0.5),
+          0 0 20px rgba(255, 70, 70, 0.35),
+          inset 0 0 12px rgba(255, 70, 70, 0.35);
+}
+
+.pixel-button-danger:active {
+  animation: pixel-button-danger-flash 180ms ease-out;
+}
+
+@keyframes pixel-button-danger-flash {
+  0% {
+    border-color: #ff6b6b;
+    color: #ffffff;
+
+    box-shadow:
+            0 0 8px #ff6b6b,
+            0 0 25px #ff3b3b,
+            0 0 45px rgba(255, 107, 107, 0.8),
+            inset 0 0 20px #ff3b3b;
+  }
+
+  100% {
+    border-color: #575969;
+    color: #ff6b6b;
+
+    box-shadow:
+            0 0 0 transparent,
+            inset 0 0 0 transparent;
   }
 }
