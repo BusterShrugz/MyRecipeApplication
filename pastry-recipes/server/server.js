@@ -1,7 +1,12 @@
 const express = require("express");
 const cors = require("cors");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 require("dotenv").config();
+
+const {
+    validateRecipe,
+    sanitizeRecipe
+} = require("./recipeValidation");
 
 const app = express();
 const PORT = process.env.PORT || 5050;
@@ -25,7 +30,9 @@ async function startServer() {
         // GET all recipes
         app.get("/api/recipes", async (req, res) => {
             try {
-                const recipes = await recipesCollection.find({}).toArray();
+                const recipes = await recipesCollection
+                    .find({})
+                    .toArray();
 
                 res.json(recipes);
             } catch (error) {
@@ -37,94 +44,59 @@ async function startServer() {
             }
         });
 
-// CREATE a new recipe
+        // GET one recipe
+        app.get("/api/recipes/:id", async (req, res) => {
+            try {
+                const { id } = req.params;
+
+                if (!ObjectId.isValid(id)) {
+                    return res.status(400).json({
+                        error: "Invalid recipe ID"
+                    });
+                }
+
+                const recipe = await recipesCollection.findOne({
+                    _id: new ObjectId(id)
+                });
+
+                if (!recipe) {
+                    return res.status(404).json({
+                        error: "Recipe not found"
+                    });
+                }
+
+                res.json(recipe);
+            } catch (error) {
+                console.error(error);
+
+                res.status(500).json({
+                    error: "Failed to retrieve recipe"
+                });
+            }
+        });
+
+        // CREATE recipe
         app.post("/api/recipes", async (req, res) => {
             try {
-                const {
-                    name,
-                    category,
-                    subcategory,
-                    yield: recipeYield,
-                    ingredients,
-                    instructions
-                } = req.body;
+                const validation = validateRecipe(req.body);
 
-                // Required fields
-                if (!name || !category || !recipeYield || !ingredients || !instructions) {
+                if (!validation.valid) {
                     return res.status(400).json({
-                        error: "Missing required recipe fields"
+                        error: "Recipe validation failed",
+                        details: validation.errors
                     });
                 }
 
-                // Validate yield
-                if (
-                    typeof recipeYield.quantity !== "number" ||
-                    !recipeYield.unit
-                ) {
-                    return res.status(400).json({
-                        error: "Yield must contain a numeric quantity and unit"
-                    });
-                }
-
-                // Validate ingredients
-                if (
-                    !Array.isArray(ingredients) ||
-                    ingredients.length === 0
-                ) {
-                    return res.status(400).json({
-                        error: "Recipe must contain at least one ingredient"
-                    });
-                }
-
-                for (const ingredient of ingredients) {
-                    if (
-                        !ingredient.name ||
-                        typeof ingredient.amount !== "number" ||
-                        !ingredient.unit
-                    ) {
-                        return res.status(400).json({
-                            error:
-                                "Each ingredient must contain a name, numeric amount, and unit"
-                        });
-                    }
-                }
-
-                // Validate instructions
-                if (
-                    !Array.isArray(instructions) ||
-                    instructions.length === 0
-                ) {
-                    return res.status(400).json({
-                        error: "Recipe must contain at least one instruction"
-                    });
-                }
-
-                for (const instruction of instructions) {
-                    if (typeof instruction !== "string" || !instruction.trim()) {
-                        return res.status(400).json({
-                            error: "Each instruction must contain text"
-                        });
-                    }
-                }
-
-                const recipe = {
-                    name: name.trim(),
-                    category: category.trim(),
-                    subcategory: subcategory?.trim() || "",
-                    yield: {
-                        quantity: recipeYield.quantity,
-                        unit: recipeYield.unit.trim()
-                    },
-                    ingredients,
-                    instructions
-                };
+                const recipe = sanitizeRecipe(req.body);
 
                 const result = await recipesCollection.insertOne(recipe);
 
-                res.status(201).json({
-                    message: "Recipe created successfully",
-                    recipeId: result.insertedId
-                });
+                const createdRecipe =
+                    await recipesCollection.findOne({
+                        _id: result.insertedId
+                    });
+
+                res.status(201).json(createdRecipe);
 
             } catch (error) {
                 console.error(error);
@@ -135,8 +107,95 @@ async function startServer() {
             }
         });
 
+        // UPDATE recipe
+        app.put("/api/recipes/:id", async (req, res) => {
+            try {
+                const { id } = req.params;
+
+                if (!ObjectId.isValid(id)) {
+                    return res.status(400).json({
+                        error: "Invalid recipe ID"
+                    });
+                }
+
+                const validation = validateRecipe(req.body);
+
+                if (!validation.valid) {
+                    return res.status(400).json({
+                        error: "Recipe validation failed",
+                        details: validation.errors
+                    });
+                }
+
+                const recipe = sanitizeRecipe(req.body);
+
+                const result =
+                    await recipesCollection.replaceOne(
+                        { _id: new ObjectId(id) },
+                        recipe
+                    );
+
+                if (result.matchedCount === 0) {
+                    return res.status(404).json({
+                        error: "Recipe not found"
+                    });
+                }
+
+                const updatedRecipe =
+                    await recipesCollection.findOne({
+                        _id: new ObjectId(id)
+                    });
+
+                res.json(updatedRecipe);
+
+            } catch (error) {
+                console.error(error);
+
+                res.status(500).json({
+                    error: "Failed to update recipe"
+                });
+            }
+        });
+
+        // DELETE recipe
+        app.delete("/api/recipes/:id", async (req, res) => {
+            try {
+                const { id } = req.params;
+
+                if (!ObjectId.isValid(id)) {
+                    return res.status(400).json({
+                        error: "Invalid recipe ID"
+                    });
+                }
+
+                const result =
+                    await recipesCollection.deleteOne({
+                        _id: new ObjectId(id)
+                    });
+
+                if (result.deletedCount === 0) {
+                    return res.status(404).json({
+                        error: "Recipe not found"
+                    });
+                }
+
+                res.json({
+                    message: "Recipe deleted successfully"
+                });
+
+            } catch (error) {
+                console.error(error);
+
+                res.status(500).json({
+                    error: "Failed to delete recipe"
+                });
+            }
+        });
+
         app.listen(PORT, () => {
-            console.log(`Server running at http://localhost:${PORT}`);
+            console.log(
+                `Server running at http://localhost:${PORT}`
+            );
         });
 
     } catch (error) {

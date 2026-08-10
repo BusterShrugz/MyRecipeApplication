@@ -22,7 +22,59 @@ export async function createRecipe(recipe) {
     const data = await response.json();
 
     if (!response.ok) {
-        throw new Error(data.error || "Failed to create recipe");
+        const error = new Error(
+            data.error || "Failed to create recipe"
+        );
+
+        error.details = data.details;
+
+        throw error;
+    }
+
+    return data;
+}
+
+export async function deleteRecipe(recipeId) {
+    const response = await fetch(
+        `${API_URL}/recipes/${recipeId}`,
+        {
+            method: "DELETE"
+        }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(
+            data.error || "Failed to delete recipe"
+        );
+    }
+
+    return data;
+}
+
+export async function updateRecipe(recipeId, recipe) {
+    const response = await fetch(
+        `${API_URL}/recipes/${recipeId}`,
+        {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(recipe)
+        }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        const error = new Error(
+            data.error || "Failed to update recipe"
+        );
+
+        error.details = data.details;
+
+        throw error;
     }
 
     return data;

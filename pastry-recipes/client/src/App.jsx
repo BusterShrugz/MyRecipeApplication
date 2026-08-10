@@ -21,6 +21,7 @@ const App = () => {
             <Recipe
                 recipe={selectedRecipe}
                 onBack={() => setSelectedRecipe(null)}
+                onDeleted={() => setSelectedRecipe(null)}
             />
         );
     }
