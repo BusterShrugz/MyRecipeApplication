@@ -4,7 +4,7 @@ import { getRecipes } from "../services/recipeService";
 import RecipeList from "../appComponents/RecipeList";
 import CategoryList from "../appComponents/CategoryList";
 
-const Home = ({ onSelectRecipe }) => {
+const Home = ({ onSelectRecipe, onCreateRecipe }) => {
     const [recipes, setRecipes] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState("All");
     const [loading, setLoading] = useState(true);
@@ -42,7 +42,14 @@ const Home = ({ onSelectRecipe }) => {
 
     return (
         <main className="home">
-            <h1>My Pastry Recipes</h1>
+
+            <div className="home-header">
+                <h1>My Pastry Recipes</h1>
+
+                <button onClick={onCreateRecipe}>
+                    + Create Recipe
+                </button>
+            </div>
 
             <CategoryList
                 selectedCategory={selectedCategory}

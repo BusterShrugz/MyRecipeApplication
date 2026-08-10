@@ -2,24 +2,35 @@ import { useState } from "react";
 
 import Home from "./appPages/Home";
 import Recipe from "./appPages/Recipe";
+import CreateRecipe from "./appPages/CreateRecipe";
 
 const App = () => {
-  const [selectedRecipe, setSelectedRecipe] = useState(null);
+    const [selectedRecipe, setSelectedRecipe] = useState(null);
+    const [creatingRecipe, setCreatingRecipe] = useState(false);
 
-  if (selectedRecipe) {
+    if (creatingRecipe) {
+        return (
+            <CreateRecipe
+                onBack={() => setCreatingRecipe(false)}
+            />
+        );
+    }
+
+    if (selectedRecipe) {
+        return (
+            <Recipe
+                recipe={selectedRecipe}
+                onBack={() => setSelectedRecipe(null)}
+            />
+        );
+    }
+
     return (
-        <Recipe
-            recipe={selectedRecipe}
-            onBack={() => setSelectedRecipe(null)}
+        <Home
+            onSelectRecipe={setSelectedRecipe}
+            onCreateRecipe={() => setCreatingRecipe(true)}
         />
     );
-  }
-
-  return (
-      <Home
-          onSelectRecipe={setSelectedRecipe}
-      />
-  );
 };
 
 export default App;
