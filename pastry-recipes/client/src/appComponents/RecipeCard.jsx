@@ -3,7 +3,9 @@ const RecipeCard = ({ recipe, onClick }) => {
         <article className="recipe-card">
             <h2>{recipe.name}</h2>
 
-            <p>{recipe.category}</p>
+            <p className="recipe-category">
+                {recipe.category}
+            </p>
 
             <p>
                 Yield: {recipe.yield.quantity} {recipe.yield.unit}

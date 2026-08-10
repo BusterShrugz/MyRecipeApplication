@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 
 import { getRecipes } from "../services/recipeService";
 import RecipeList from "../appComponents/RecipeList";
+import CategoryList from "../appComponents/CategoryList";
 
 const Home = ({ onSelectRecipe }) => {
     const [recipes, setRecipes] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState("All");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -31,12 +33,24 @@ const Home = ({ onSelectRecipe }) => {
         return <p>Error: {error}</p>;
     }
 
+    const filteredRecipes =
+        selectedCategory === "All"
+            ? recipes
+            : recipes.filter(
+                (recipe) => recipe.category === selectedCategory
+            );
+
     return (
-        <main>
+        <main className="home">
             <h1>My Pastry Recipes</h1>
 
+            <CategoryList
+                selectedCategory={selectedCategory}
+                onSelectCategory={setSelectedCategory}
+            />
+
             <RecipeList
-                recipes={recipes}
+                recipes={filteredRecipes}
                 onSelectRecipe={onSelectRecipe}
             />
         </main>

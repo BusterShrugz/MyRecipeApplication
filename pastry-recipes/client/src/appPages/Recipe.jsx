@@ -7,7 +7,7 @@ const Recipe = ({ recipe, onBack }) => {
     }
 
     return (
-        <main>
+        <main className="recipe">
             <button onClick={onBack}>
                 ← Back to Recipes
             </button>
