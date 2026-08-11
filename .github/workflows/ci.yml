@@ -14,7 +14,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: client
+        working-directory: pastry-recipes/client
 
     steps:
       - name: Checkout repository
@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: client/package-lock.json
+          cache-dependency-path: pastry-recipes/client/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -42,7 +42,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: server
+        working-directory: pastry-recipes/server
 
     steps:
       - name: Checkout repository
@@ -53,7 +53,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: server/package-lock.json
+          cache-dependency-path: pastry-recipes/client/package-lock.json
 
       - name: Install dependencies
         run: npm ci
