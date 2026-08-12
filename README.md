@@ -4,6 +4,7 @@ A full-stack recipe management application built to make storing, viewing, and s
 
 The project was created as a practical full-stack application to explore REST APIs, database integration, reusable React components, and dynamic recipe calculations.
 
+![CI](https://github.com/BusterShrugz/MyRecipeApplication/actions/workflows/ci.yml/badge.svg)
 ##  Features
 
 *  **Recipe Management**
