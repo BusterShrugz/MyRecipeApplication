@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 const { app, setRecipesCollection } = require("../server/app");
 const { connectToDatabase } = require("../server/database");
 
