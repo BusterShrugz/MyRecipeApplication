@@ -11,9 +11,7 @@ import {formatAmount} from "../utility/formatAmount";
 const Recipe = ({recipe, onBack, onDeleted}) => {
     const [deleting, setDeleting] = useState(false);
     const [error, setError] = useState(null);
-    const [targetYield, setTargetYield] = useState(recipe.yield.quantity);
     const [isLocked, setIsLocked] = useState(false);
-
     const [desiredYield, setDesiredYield] = useState(
         recipe?.yield?.quantity ?? 1
     );
