@@ -6,7 +6,8 @@ const IngredientList = ({ ingredients }) => {
             <ul>
                 {ingredients.map((ingredient, index) => (
                     <li key={index}>
-                        {ingredient.name}: {ingredient.amount}{" "}
+                        {ingredient.name}: {" "}
+                        {Number(ingredient.amount.toFixed(2))}{" "}
                         {ingredient.unit}
                     </li>
                 ))}

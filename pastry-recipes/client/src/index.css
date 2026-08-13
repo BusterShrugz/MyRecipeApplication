@@ -535,3 +535,185 @@ code {
             inset 0 0 0 transparent;
   }
 }
+
+/* =========================================================
+   RECIPE SCALER
+========================================================= */
+
+.recipe-scaler {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.recipe-scaler label {
+  color: var(--text-h);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+/* Pixel-style number input */
+.recipe-scaler input {
+  position: relative;
+
+  width: 60px;
+  height: 44px;
+  padding: 0;
+
+  box-sizing: border-box;
+
+  border: 2px solid #575969;
+  border-radius: 4px;
+
+  background-color: #24252c;
+  background-image:
+          repeating-linear-gradient(
+                  0deg,
+                  #181a29,
+                  #181a29 2px,
+                  #202436 2px,
+                  #202436 4px
+          );
+
+  color: #76b3fa;
+
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+  font-weight: 300;
+  text-align: center;
+
+  outline: none;
+
+  transition:
+          border-color 200ms ease,
+          color 200ms ease,
+          box-shadow 200ms ease,
+          transform 100ms ease;
+}
+
+/* Pixel texture */
+.recipe-scaler input {
+  background-image:
+          repeating-linear-gradient(
+                  0deg,
+                  #181a29,
+                  #181a29 2px,
+                  #202436 2px,
+                  #202436 4px
+          ),
+          repeating-linear-gradient(
+                  90deg,
+                  transparent 0,
+                  transparent 3px,
+                  rgba(118, 179, 250, 0.04) 3px,
+                  rgba(118, 179, 250, 0.04) 4px
+          );
+}
+
+/* Hover */
+.recipe-scaler input:hover {
+  border-color: #76b3fa;
+  color: #9dccff;
+
+  box-shadow:
+          0 0 8px rgba(7, 99, 247, 0.5),
+          0 0 20px rgba(7, 99, 247, 0.35),
+          inset 0 0 12px rgba(7, 99, 247, 0.35);
+}
+
+/* Focus */
+.recipe-scaler input:focus {
+  border-color: #76b3fa;
+  color: #ffffff;
+
+  box-shadow:
+          0 0 10px rgba(7, 99, 247, 0.6),
+          inset 0 0 12px rgba(7, 99, 247, 0.4);
+}
+
+/* Click */
+.recipe-scaler input:active {
+  transform: scale(0.97);
+}
+
+/* Remove browser number-input arrows */
+.recipe-scaler input::-webkit-inner-spin-button,
+.recipe-scaler input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.recipe-scaler input[type="number"] {
+  appearance: textfield;
+}
+
+/* Unit text */
+.recipe-scaler span {
+  color: var(--text);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 13px;
+}
+
+.recipe-scaler .pixel-button {
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  padding: 0;
+}
+
+/* lock button */
+
+.pixel-lock {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+
+  border: 2px solid #575969;
+  border-radius: 4px;
+
+  background-color: #24252c;
+  background-image:
+          repeating-linear-gradient(
+                  0deg,
+                  #181a29,
+                  #181a29 2px,
+                  #202436 2px,
+                  #202436 4px
+          );
+
+  color: #76b3fa;
+
+  font-size: 14px;
+
+  cursor: pointer;
+
+  transition:
+          border-color 200ms ease,
+          box-shadow 200ms ease,
+          transform 100ms ease;
+}
+
+.pixel-lock:hover {
+  border-color: #ff6b6b;
+
+  box-shadow:
+          0 0 8px rgba(7, 99, 247, 0.5),
+          0 0 20px rgba(7, 99, 247, 0.35),
+          inset 0 0 12px rgba(7, 99, 247, 0.35);
+}
+
+.pixel-lock:active {
+  transform: scale(0.95);
+}
+
+.pixel-lock.locked {
+  border-color: #ff3b3b;
+  color: #ff6b6b;
+
+  box-shadow:
+          0 0 8px rgba(7, 99, 247, 0.5),
+          inset 0 0 12px rgba(7, 99, 247, 0.35);
+}
