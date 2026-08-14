@@ -12,6 +12,8 @@ const Recipe = ({recipe, onBack, onDeleted}) => {
     const [deleting, setDeleting] = useState(false);
     const [error, setError] = useState(null);
     const [isLocked, setIsLocked] = useState(false);
+    const [showDeletePrompt, setShowDeletePrompt] = useState(false);
+    const [deletePassword, setDeletePassword] = useState("");
     const [desiredYield, setDesiredYield] = useState(
         recipe?.yield?.quantity ?? 1
     );
@@ -25,12 +27,15 @@ const Recipe = ({recipe, onBack, onDeleted}) => {
         desiredYield
     );
 
-    const handleDelete = async () => {
-        const confirmed = window.confirm(
-            `Are you sure you want to delete "${recipe.name}"?`
-        );
+    const handleDelete = () => {
+        setDeletePassword("");
+        setError(null);
+        setShowDeletePrompt(true);
+    };
 
-        if (!confirmed) {
+    const confirmDelete = async () => {
+        if (!deletePassword) {
+            setError("Password required to delete");
             return;
         }
 
@@ -38,8 +43,12 @@ const Recipe = ({recipe, onBack, onDeleted}) => {
             setDeleting(true);
             setError(null);
 
-            await deleteRecipe(recipe._id);
+            await deleteRecipe(
+                recipe._id,
+                deletePassword
+            );
 
+            setShowDeletePrompt(false);
             onDeleted();
         } catch (err) {
             setError(err.message);
@@ -138,12 +147,6 @@ const Recipe = ({recipe, onBack, onDeleted}) => {
                 {recipe.yield.unit}
             </p>
 
-            {error && (
-                <p className="form-error">
-                    {error}
-                </p>
-            )}
-
             <IngredientList
                 ingredients={scaledRecipe.ingredients}
                 formatAmount={formatAmount}
@@ -158,10 +161,87 @@ const Recipe = ({recipe, onBack, onDeleted}) => {
                 disabled={deleting}
                 variant="danger"
             >
-                {deleting
-                    ? "Deleting..."
-                    : "Delete Recipe"}
+                Delete Recipe
             </PixelButton>
+
+            {showDeletePrompt && (
+                <div className="delete-modal-overlay">
+                    <div
+                        className="delete-modal"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="delete-modal-title"
+                    >
+                        <button
+                            type="button"
+                            className="delete-modal-close"
+                            onClick={() => {
+                                setShowDeletePrompt(false);
+                                setDeletePassword("");
+                                setError(null);
+                            }}
+                            aria-label="Close delete prompt"
+                        >
+                            ×
+                        </button>
+
+                        <h2 id="delete-modal-title">
+                            Delete Recipe
+                        </h2>
+
+                        <p>
+                            Enter the owner password to delete{" "}
+                            <strong>{recipe.name}</strong>.
+                        </p>
+
+                        <label htmlFor="delete-password">
+                            Password
+                        </label>
+
+                        <input
+                            id="delete-password"
+                            type="password"
+                            value={deletePassword}
+                            onChange={(e) =>
+                                setDeletePassword(e.target.value)
+                            }
+                            autoFocus
+                            disabled={deleting}
+                        />
+
+                        {error && (
+                            <p className="form-error">
+                                {error}
+                            </p>
+                        )}
+
+                        <div className="delete-modal-actions">
+                            <PixelButton
+                                type="button"
+                                onClick={() => {
+                                    setShowDeletePrompt(false);
+                                    setDeletePassword("");
+                                    setError(null);
+                                }}
+                                disabled={deleting}
+                            >
+                                Cancel
+                            </PixelButton>
+
+                            <PixelButton
+                                type="button"
+                                onClick={confirmDelete}
+                                disabled={deleting}
+                                variant="danger"
+                            >
+                                {deleting
+                                    ? "Deleting..."
+                                    : "Delete"}
+                            </PixelButton>
+                        </div>
+                    </div>
+                </div>
+            )}
         </main>
     );
 };
