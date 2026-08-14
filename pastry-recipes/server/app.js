@@ -149,6 +149,26 @@ app.delete("/api/recipes/:id", async (req, res) => {
         const { id } = req.params;
         const { password } = req.body;
 
+        console.log("Delete password received:", Boolean(password));
+        console.log(
+            "Delete password configured:",
+            Boolean(process.env.DELETE_RECIPE_PASSWORD)
+        );
+        console.log(
+            "DELETE_RECIPE_PASSWORD configured:",
+            Boolean(process.env.DELETE_RECIPE_PASSWORD)
+        );
+
+        console.log(
+            "Received password length:",
+            password?.length
+        );
+
+        console.log(
+            "Configured password length:",
+            process.env.DELETE_RECIPE_PASSWORD?.length
+        );
+
         if (!password) {
             return res.status(401).json({
                 error: "Password required to delete"
