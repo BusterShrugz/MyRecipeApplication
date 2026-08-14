@@ -1,147 +1,342 @@
 # My Recipes Storage and Creation App
 
-A full-stack recipe management application built to make storing, viewing, and scaling recipes simple. The application uses a React frontend with a Node.js/Express backend and MongoDB for persistent recipe storage.
+[![CI](https://github.com/BusterShrugz/MyRecipeApplication/actions/workflows/ci.yml/badge.svg)](https://github.com/BusterShrugz/MyRecipeApplication/actions/workflows/ci.yml)
 
-The project was created as a practical full-stack application to explore REST APIs, database integration, reusable React components, and dynamic recipe calculations.
+A full-stack recipe management application built to make storing, organizing, viewing, creating, editing, deleting, and scaling recipes simple.
 
-![CI](https://github.com/BusterShrugz/MyRecipeApplication/actions/workflows/ci.yml/badge.svg)
-##  Features
+The application combines a **React/Vite frontend**, **Node.js/Express REST API**, and **MongoDB Atlas database** to provide persistent recipe storage with a responsive, user friendly interface.
 
-*  **Recipe Management**
+The project began as a practical exercise in working with REST APIs and MongoDB and has evolved into a complete deployed full-stack application with automated testing, continuous integration, validation, and production deployment.
 
-  * Store recipes in MongoDB
-  * View recipe details and ingredients
-  * Organize recipes for easy access
+---
 
-*  **Recipe Scaling**
+## Features
 
-  * Adjust recipe quantities based on the desired yield
-  * Automatically calculate scaled ingredient amounts
+### Recipe Management
 
-*  **Ingredient Display**
+* Create new recipes through the web interface
+* View individual recipe details
+* Delete recipes
+* Retrieve recipes from MongoDB
+* Organize recipes by category and subcategory
+* Display recipe yield, ingredients, and instructions
+* Storage through MongoDB Atlas
 
-  * Display ingredient quantities and measurements
-  * Present recipes in a cook-friendly format
+### Recipe Scaling
 
-*  **REST API**
+Recipes can be dynamically scaled based on the desired yield amount.
 
-  * Express backend provides recipe endpoints
-  * Frontend communicates with the backend using HTTP requests
+For example:
 
-*  **MongoDB Database**
+```text
+Original Yield: 12
+Desired Yield: 24
 
-  * Persistent storage for recipes
-  * Flexible document structure for ingredients, instructions, and recipe metadata
+Scaling Factor = 24 / 12
+               = 2
+```
 
-*  **Responsive React UI**
+An ingredient using:
 
-  * Component-based frontend architecture
-  * Reusable UI components
-  * Designed for both desktop and smaller screens
+```text
+200 g flour
+```
 
-##  Technologies
+will automatically become:
+
+```text
+400 g flour
+```
+
+The scaling functionality is handled on the frontend so users can adjust a recipe without modifying the original recipe stored in the database.
+
+### Recipe Categories
+
+Recipes can be organized into categories including:
+
+* Cakes
+* Breads
+* Viennoiserie
+* Pastry
+* Cookies
+* Sauces
+* Creams & Custards
+* Savory
+
+Recipes can also contain subcategories for additional organization.
+
+### Ingredient Display
+
+Ingredients are stored as structured recipe data and displayed in a user friendly format.
+
+The application supports:
+
+* Ingredient quantities
+* Units of measurement
+* Ingredient names
+* Dynamically calculated quantities when scaling
+* Recipe yield information
+
+### Recipe Validation
+
+The backend validates incoming recipe data before it is stored or modified.
+
+Validation includes:
+
+* Required fields
+* Valid recipe categories
+* Allowed recipe fields
+* Ingredient structure
+* Recipe yield
+* Input sanitization
+* Validation of create and update requests
+
+This prevents malformed or unexpected data from being stored in the database.
+
+### REST API
+
+The Express backend provides RESTful endpoints for recipe management.
+
+Supported operations include:
+
+* Retrieve all recipes
+* Retrieve an individual recipe
+* Create recipes
+* Delete recipes
+
+The React frontend communicates with the API using HTTP requests.
+
+### MongoDB Atlas
+
+Recipe data is persistently stored in MongoDB Atlas.
+
+The database uses MongoDB's document-based structure to store information such as:
+
+```text
+Recipe
+├── name
+├── category
+├── subcategory
+├── yield
+├── ingredients
+└── instructions
+```
+
+### Responsive React UI
+
+The frontend uses reusable React components to separate application functionality and presentation.
+
+Components are organized around features such as:
+
+* Recipe lists
+* Recipe cards
+* Recipe forms
+* Ingredients
+* Instructions
+* Categories
+* Buttons and reusable UI elements
+
+The interface is designed to provide a practical experience for viewing and working with recipes on both desktop and smaller screens.
+
+---
+
+## Testing
+
+The backend includes automated API tests using:
+
+* **Vitest**
+* **Supertest**
+* **MongoDB Memory Server**
+
+The test suite runs against an isolated in-memory MongoDB instance rather than the production database.
+
+Tests cover the primary recipe API functionality, including:
+
+* `GET /recipes`
+* `GET /recipes/:id`
+* `POST /recipes`
+* `PUT /recipes/:id`
+* `DELETE /recipes/:id`
+* Validation failures
+* Invalid recipe data
+* Missing resources
+* CRUD behavior
+
+The project currently uses automated tests as part of the development workflow to help prevent regressions when modifying the API.
+
+---
+
+## Continuous Integration
+
+GitHub Actions is used to automatically validate changes.
+
+The CI workflow performs separate frontend and backend checks.
+
+### Frontend Checks
+
+The frontend pipeline runs:
+
+* Dependency installation
+* ESLint
+* Production build
+
+### Backend Checks
+
+The backend pipeline runs:
+
+* Dependency installation
+* Automated Vitest test suite
+* API tests using MongoDB Memory Server
+
+The CI badge at the top of this README reflects the status of the project's automated checks.
+
+---
+
+## Deployment
+
+The application is deployed using **Vercel**.
+
+The production architecture separates the frontend application from the Express API while allowing both to operate under the same deployment.
+
+### Production Architecture
+
+```text
+Browser
+   │
+   ▼
+React / Vite Frontend
+   │
+   │ HTTP Requests
+   ▼
+Vercel Serverless API
+   │
+   ▼
+Node.js / Express
+   │
+   │ MongoDB Driver
+   ▼
+MongoDB Atlas
+```
+
+The Express API is adapted for Vercel's serverless environment through:
+
+```text
+server/api/index.js
+```
+
+Production API requests are routed through:
+
+```text
+/api/*
+```
+
+Environment variables are used for sensitive configuration such as the MongoDB connection string rather than committing credentials to the repository.
+
+---
+
+## Technologies
 
 ### Frontend
 
 * React
 * JavaScript
 * Vite
-* CSS / Tailwind CSS
+* CSS
+* Tailwind CSS
 
 ### Backend
 
 * Node.js
 * Express.js
+* REST API
+* CORS
+* dotenv
 
 ### Database
 
 * MongoDB
 * MongoDB Atlas
+* MongoDB Node.js Driver
+
+### Testing
+
+* Vitest
+* Supertest
+* MongoDB Memory Server
+
+### Deployment & CI/CD
+
+* Vercel
+* GitHub Actions
 
 ### Development Tools
 
-* Git / GitHub
+* Git
+* GitHub
 * npm
-* VS Code
+* IntelliJ
+* Firefox Developer Tools
+* MongoDB Atlas
 
-##  Project Structure <-- So far  
+---
 
-```text
-recipe-app/
-├── client/
-│   ├── src/
-│   │   ├── appComponents/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   └── App.jsx
-│   └── package.json
-│
-├── server/
-│   ├── models/
-│   ├── routes/
-│   ├── controllers/
-│   ├── server.js
-│   └── package.json
-│
-├── .gitignore
-└── README.md
-```
+## Project Structure
 
-> The exact structure may change as the application develops.
+The project is organized into separate frontend and backend applications.
 
-##  Getting Started
+---
+
+## Getting Started
 
 ### Prerequisites
 
-Make sure you have the following installed:
+Make sure the following are installed:
 
 * [Node.js](https://nodejs.org/)
 * npm
+* Git
 * A MongoDB database, either locally or through MongoDB Atlas
 
 ### 1. Clone the repository
 
 ```bash
-git clone <https://github.com/BusterShrugz/MyRecipeApplication.git>
-cd recipe-app
+git clone https://github.com/BusterShrugz/MyRecipeApplication.git
+cd MyRecipeApplication
 ```
 
 ### 2. Install dependencies
 
-Install the frontend dependencies:
+Install the root/backend dependencies:
+
+```bash
+npm install
+```
+
+Then install the frontend dependencies:
 
 ```bash
 cd client
 npm install
 ```
 
-Then install the backend dependencies:
-
-```bash
-cd ../server
-npm install
-```
-
 ### 3. Configure environment variables
 
-Create a `.env` file inside the server directory.
+Create a `.env` file for the backend configuration.
 
 ```env
 MONGODB_URI=your_mongodb_connection_string
 PORT=5050
 ```
 
-Do not commit your `.env` file to GitHub.
+Do **not** commit `.env` files or database credentials to GitHub.
+
+The project `.gitignore` is configured to prevent environment files from being committed.
 
 ### 4. Start the backend
 
-From the server directory:
+From the server/project directory, start the Express API using the project's development script.
 
-```bash
-npm run dev
-```
-
-The API should be available at:
+The local API runs on:
 
 ```text
 http://localhost:5050
@@ -149,7 +344,7 @@ http://localhost:5050
 
 ### 5. Start the frontend
 
-Open another terminal:
+From the client directory:
 
 ```bash
 cd client
@@ -162,57 +357,93 @@ Vite will provide a local development URL, typically:
 http://localhost:5173
 ```
 
-##  API
+---
 
-The backend exposes REST endpoints for interacting with recipes.
+## API
+
+The backend exposes RESTful recipe endpoints.
 
 ### Get all recipes
 
 ```http
-GET /recipes
+GET /api/recipes
 ```
 
 ### Get a recipe
 
 ```http
-GET /recipes/:id
+GET /api/recipes/:id
 ```
 
 ### Create a recipe
 
 ```http
-POST /recipes
+POST /api/recipes
 ```
 
 ### Update a recipe
 
 ```http
-PUT /recipes/:id
+PUT /api/recipes/:id
 ```
 
 ### Delete a recipe
 
 ```http
-DELETE /recipes/:id
+DELETE /api/recipes/:id
 ```
 
-> API endpoints may change as development continues.
+The API validates recipe data before creating or updating documents.
 
-##  Recipe Scaling : TODO
+---
 
-One of the main goals of the application is to make recipes easier to scale.
+## Example Recipe
 
-For example, if a recipe produces 12 cookies and the user wants 24:
+A recipe document follows a structure similar to:
+
+```json
+{
+  "name": "Chocolate Chip Cookies",
+  "category": "Cookies",
+  "subcategory": "Drop Cookies",
+  "yield": 24,
+  "ingredients": [
+    {
+      "quantity": 200,
+      "unit": "g",
+      "name": "flour"
+    }
+  ],
+  "instructions": [
+    "Cream the butter and sugar.",
+    "Add the eggs and vanilla.",
+    "Mix in the dry ingredients.",
+    "Bake until golden brown."
+  ]
+}
+```
+
+---
+
+## Recipe Scaling
+
+The recipe scaler calculates ingredient quantities using the ratio between the desired yield and the original recipe yield.
+
+```text
+Scaling Factor = Desired Yield / Original Yield
+```
+
+For example:
 
 ```text
 Original Yield: 12
-Desired Yield: 24
+Desired Yield: 30
 
-Scaling Factor = 24 / 12
-               = 2
+Scaling Factor = 30 / 12
+               = 2.5
 ```
 
-An ingredient originally using:
+An ingredient containing:
 
 ```text
 200 g flour
@@ -221,64 +452,181 @@ An ingredient originally using:
 would become:
 
 ```text
-400 g flour
+500 g flour
 ```
 
-The frontend handles these calculations dynamically so the user can adjust the recipe without manually recalculating every ingredient.
+The original recipe remains unchanged in the database.
 
-##  Screenshots : TODO
-
-Screenshots of the application will be added here as the UI develops.
-
-### Recipe List
-
-*Future screenshot here*
-
-### Recipe Details
-
-*Future screenshot here*
-
-### Recipe Scaling
-
-*Future screenshot here*
-
-##  Future Improvements
-
-Planned improvements include:
-
-* [ ] User accounts and authentication
-* [ ] ~~Create~~/edit/~~delete~~ recipes through the UI
-* [ ] Recipe search and filtering
-* [ ] Recipe categories and tags
-* [ ] Improved unit conversion
-* [ ] Fractional measurements
-* [ ] Ingredient substitution suggestions
-* [ ] Image uploads for recipes
-* [ ] Responsive/mobile improvements
-* [ ] Deployment of frontend and backend
-* [ ] Automated testing
-
-##  Project Goals
-
-This project is being developed as a full-stack software engineering project with a focus on:
-
-* Building a RESTful API
-* Working with MongoDB and document-based data
-* Connecting a React frontend to a backend service
-* Creating reusable React components
-* Managing application state
-* Performing dynamic calculations in the frontend
-* Practicing Git and GitHub development workflows
-* Designing an application around a practical real-world use case
-
-##  Author
-
-**Reese Edens**
-
-Senior Computer Science & Software Engineering Student
-
-Interested in software engineering, full-stack development, data, and building practical applications.
+This allows the application to function as both a recipe storage system and a practical kitchen calculation tool.
 
 ---
 
-If you find this project interesting, feel free to star the repository!
+## Current Development Status
+
+The core recipe management system is now functional.
+
+### Completed
+
+* [x] React frontend
+* [x] Vite development environment
+* [x] Express REST API
+* [x] MongoDB integration
+* [x] MongoDB Atlas persistence
+* [x] Recipe retrieval
+* [x] Recipe creation
+* [x] Recipe editing
+* [x] Recipe deletion
+* [x] Recipe scaling
+* [x] Ingredient display
+* [x] Recipe categories
+* [x] Recipe subcategories
+* [x] Backend validation
+* [x] Input sanitization
+* [x] Frontend API service layer
+* [x] Reusable React components
+* [x] Loading and error handling
+* [x] Automated backend testing
+* [x] MongoDB Memory Server test environment
+* [x] GitHub Actions CI
+* [x] Production frontend build
+* [x] Vercel deployment
+* [x] Production serverless API
+* [x] Production MongoDB connection
+* [x] Environment variable configuration
+* [x] CORS configuration
+* [x] Production API routing
+
+---
+
+## Future Improvements
+
+Potential future improvements include:
+
+* [ ] User accounts and authentication
+* [ ] Favorites / saved recipes
+* [ ] Recipe search
+* [ ] Advanced filtering
+* [ ] Tags
+* [ ] Improved unit conversion
+* [ ] More sophisticated ingredient parsing
+* [ ] Ingredient substitution suggestions
+* [ ] Recipe image uploads
+* [ ] Image optimization
+* [ ] Recipe import/export
+* [ ] Printable recipe cards
+* [ ] Shopping list generation
+* [ ] Improved mobile experience
+* [ ] Accessibility improvements
+* [ ] Expanded frontend test coverage
+* [ ] End-to-end testing
+* [ ] API documentation
+* [ ] Performance monitoring
+* [ ] Production analytics
+
+---
+
+## What I have Learned
+
+This project has helped me develop a practical experience across the entire development lifecycle.
+
+### Frontend Development
+
+* Building component-based React applications
+* Managing React state
+* Creating reusable components
+* Handling asynchronous API requests
+* Building dynamic recipe calculations
+* Managing loading, error, and success states
+* Structuring frontend service layers
+* Creating responsive interfaces
+
+### Backend Development
+
+* Designing RESTful APIs
+* Building Express middleware
+* Validating and sanitizing incoming data
+* Handling HTTP errors
+* Working with MongoDB's Node.js driver
+* Managing database connections
+* Structuring server-side application logic
+
+### Database Development
+
+* Designing MongoDB documents
+* Connecting applications to MongoDB Atlas
+* Performing CRUD operations
+* Using isolated in-memory databases for testing
+
+### Testing
+
+* Writing API integration tests
+* Using Vitest
+* Using Supertest
+* Testing CRUD operations
+* Testing validation and error cases
+* Creating isolated database environments with MongoDB Memory Server
+
+### DevOps & Deployment
+
+* Configuring GitHub Actions
+* Building CI pipelines
+* Debugging production build failures
+* Deploying React applications with Vercel
+* Deploying Express APIs as serverless functions
+* Managing production environment variables
+* Debugging production CORS and API issues
+* Connecting a production application to MongoDB Atlas
+
+---
+
+## Project Goals
+
+This project is being developed as a practical full-stack software engineering project rather than just a frontend demonstration.
+
+The primary goals are to gain experience with:
+
+* Full-stack application architecture
+* RESTful API design
+* React development
+* MongoDB and document databases
+* CRUD application design
+* Data validation and sanitization
+* Automated testing
+* Continuous integration
+* Cloud deployment
+* Serverless architecture
+* Environment configuration
+* Debugging production applications
+* Git and GitHub workflows
+* Building software around a real-world use case (storing my recipes)
+
+The project also reflects my transition from professional pastry work into software engineering by combining a familiar domain—recipe development—with modern software engineering practices.
+
+---
+
+## Author
+
+**Reese Edens**
+
+Computer Science & Software Engineering Senior Student
+
+Former professional Chef / Pastry Chef transitioning into software engineering.
+
+Interested in:
+
+* Software Engineering
+* Full-Stack Development
+* Data & Databases
+* Artificial Intelligence
+* Machine Learning
+* Practical application development
+
+---
+
+## Repository
+
+**GitHub:**
+https://github.com/BusterShrugz/MyRecipeApplication
+
+If you find the project interesting, feel free to star the repository!
+
