@@ -34,11 +34,15 @@ export async function createRecipe(recipe) {
     return data;
 }
 
-export async function deleteRecipe(recipeId) {
+export async function deleteRecipe(recipeId, password) {
     const response = await fetch(
         `${API_URL}/recipes/${recipeId}`,
         {
-            method: "DELETE"
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({password})
         }
     );
 

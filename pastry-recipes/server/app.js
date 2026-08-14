@@ -147,6 +147,19 @@ app.put("/api/recipes/:id", async (req, res) => {
 app.delete("/api/recipes/:id", async (req, res) => {
     try {
         const { id } = req.params;
+        const { password } = req.body;
+
+        if (!password) {
+            return res.status(401).json({
+                error: "Password required to delete"
+            });
+        }
+
+        if (password !== process.env.DELETE_RECIPE_PASSWORD) {
+            return res.status(403).json({
+                error: "Incorrect password"
+            });
+        }
 
         if (!ObjectId.isValid(id)) {
             return res.status(400).json({
