@@ -147,27 +147,12 @@ app.put("/api/recipes/:id", async (req, res) => {
 app.delete("/api/recipes/:id", async (req, res) => {
     try {
         const { id } = req.params;
-        const { password } = req.body;
-
-        console.log("Delete password received:", Boolean(password));
-        console.log(
-            "Delete password configured:",
-            Boolean(process.env.DELETE_RECIPE_PASSWORD)
-        );
-        console.log(
-            "DELETE_RECIPE_PASSWORD configured:",
-            Boolean(process.env.DELETE_RECIPE_PASSWORD)
-        );
-
-        console.log(
-            "Received password length:",
-            password?.length
-        );
-
-        console.log(
-            "Configured password length:",
-            process.env.DELETE_RECIPE_PASSWORD?.length
-        );
+        const { password } = req.body || {};
+        if (!ObjectId.isValid(id)) {
+            return res.status(400).json({
+                error: "Invalid recipe ID"
+            });
+        }
 
         if (!password) {
             return res.status(401).json({
@@ -181,11 +166,7 @@ app.delete("/api/recipes/:id", async (req, res) => {
             });
         }
 
-        if (!ObjectId.isValid(id)) {
-            return res.status(400).json({
-                error: "Invalid recipe ID"
-            });
-        }
+
 
         const result = await recipesCollection.deleteOne({
             _id: new ObjectId(id)
@@ -201,7 +182,7 @@ app.delete("/api/recipes/:id", async (req, res) => {
             message: "Recipe deleted successfully"
         });
     } catch (error) {
-        console.error(error);
+        console.error("DELETE RECIPE ERROR:", error);
 
         res.status(500).json({
             error: "Failed to delete recipe"

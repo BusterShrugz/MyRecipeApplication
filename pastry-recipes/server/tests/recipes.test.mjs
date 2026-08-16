@@ -19,6 +19,8 @@ let mongoServer;
 let mongoClient;
 let recipesCollection;
 
+const DELETE_PASSWORD = "test-delete-password";
+
 const validRecipe = {
     name: "Chocolate Chip Cookies",
     category: "Cookies",
@@ -62,6 +64,7 @@ async function insertTestRecipe() {
 }
 
 beforeAll(async () => {
+    process.env.DELETE_RECIPE_PASSWORD = DELETE_PASSWORD;
     mongoServer = await MongoMemoryServer.create();
 
     mongoClient = new MongoClient(
@@ -430,7 +433,10 @@ describe("DELETE /api/recipes/:id", () => {
             await insertTestRecipe();
 
         const response = await request(app)
-            .delete(`/api/recipes/${recipeId}`);
+            .delete(`/api/recipes/${recipeId}`)
+            .send({
+                password: DELETE_PASSWORD
+            });
 
         expect(response.status).toBe(200);
 
@@ -450,17 +456,49 @@ describe("DELETE /api/recipes/:id", () => {
             .delete("/api/recipes/not-an-id");
 
         expect(response.status).toBe(400);
+
         expect(response.body.error)
             .toBe("Invalid recipe ID");
+    });
+
+    it("returns 401 when no password is provided", async () => {
+        const recipeId = await insertTestRecipe();
+
+        const response = await request(app)
+            .delete(`/api/recipes/${recipeId}`);
+
+        expect(response.status).toBe(401);
+
+        expect(response.body.error)
+            .toBe("Password required to delete");
+    });
+
+    it("returns 403 when the password is incorrect", async () => {
+        const recipeId = await insertTestRecipe();
+
+        const response = await request(app)
+            .delete(`/api/recipes/${recipeId}`)
+            .send({
+                password: "wrong-password"
+            });
+
+        expect(response.status).toBe(403);
+
+        expect(response.body.error)
+            .toBe("Incorrect password");
     });
 
     it("returns 404 when the recipe does not exist", async () => {
         const id = new ObjectId();
 
         const response = await request(app)
-            .delete(`/api/recipes/${id}`);
+            .delete(`/api/recipes/${id}`)
+            .send({
+                password: DELETE_PASSWORD
+            });
 
         expect(response.status).toBe(404);
+
         expect(response.body.error)
             .toBe("Recipe not found");
     });
