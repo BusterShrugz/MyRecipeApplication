@@ -6,6 +6,8 @@ const PixelButton = ({
                          type = "button",
                          variant = "default",
                          disabled = false,
+                         className = "",
+                         ...buttonProps
                      }) => {
     const [active, setActive] = useState(false);
 
@@ -24,11 +26,12 @@ const PixelButton = ({
     return (
         <button
             type={type}
-            className={`pixel-button pixel-button-${variant} ${
+            className={`pixel-button pixel-button-${variant} ${className} ${
                 active ? "pixel-button-active" : ""
             }`}
             onClick={handleClick}
             disabled={disabled}
+            {...buttonProps}
         >
             <span
                 className="pixel-button-grid"
