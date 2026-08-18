@@ -1,0 +1,122 @@
+/* =========================================================
+   HOME
+========================================================= */
+.home {
+    width: 100%;
+    padding: 48px var(--page-padding) 64px;
+}
+
+/* =========================================================
+   HOME HEADER
+========================================================= */
+.home-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 32px;
+    margin-bottom: 40px;
+}
+
+.home-title {
+    min-width: 0;
+}
+
+.home-eyebrow {
+    margin-bottom: 8px;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+}
+
+.home-title h1 {
+    text-align: left;
+}
+
+.home-subtitle {
+    margin-top: 12px;
+    max-width: 600px;
+    color: var(--muted);
+    font-size: 15px;
+}
+
+/* =========================================================
+   CATEGORIES
+========================================================= */
+.home-categories {
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.category-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+.category-button {
+    flex: 0 0 auto;
+    min-height: 40px;
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    color: var(--text);
+    font-family: var(--mono);
+    font-size: 13px;
+    cursor: pointer;
+    transition:
+            border-color var(--transition-fast),
+            color var(--transition-fast),
+            background var(--transition-fast),
+            transform 100ms ease;
+}
+
+.category-button:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.category-button:active {
+    transform: translateY(1px);
+    box-shadow:
+            inset 0 0 0 2px currentColor;
+}
+
+.category-button.active {
+    background: var(--accent-bg);
+    border-color: var(--accent);
+    color: var(--accent);
+    box-shadow:
+            inset 0 0 0 2px currentColor;
+}
+
+/* =========================================================
+   RECIPE SECTION HEADER
+========================================================= */
+.home-recipes {
+    width: 100%;
+}
+
+.recipe-section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.recipe-count {
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 12px;
+}

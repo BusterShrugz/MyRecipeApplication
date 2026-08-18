@@ -1,0 +1,12 @@
+/* =========================================================
+   APPLICATION LAYOUT
+========================================================= */
+#root {
+    width: 100%;
+    max-width: var(--page-width);
+    min-height: 100svh;
+    margin: 0 auto;
+    border-inline: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+}

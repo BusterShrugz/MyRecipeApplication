@@ -1,0 +1,75 @@
+/* =========================================================
+   DESIGN TOKENS
+========================================================= */
+:root {
+    /* =========================================================
+       COLORS
+    ========================================================= */
+    --bg: #101117;
+
+    --surface: #181a22;
+    --surface-hover: #1e2130;
+
+    --text: #aeb6c7;
+    --text-h: #f2f5ff;
+    --muted: #737b8d;
+
+    --border: #343847;
+    --border-strong: #575d70;
+
+    --accent: #76b3fa;
+    --accent-bright: #9dccff;
+
+    --accent-bg: rgba(118, 179, 250, 0.08);
+    --accent-border: rgba(118, 179, 250, 0.5);
+
+    --danger: #ff6b6b;
+    --danger-bright: #ff8585;
+
+    /* =========================================================
+       SHADOWS
+    ========================================================= */
+    --shadow:
+            0 10px 15px -3px rgba(0, 0, 0, 0.35),
+            0 4px 6px -2px rgba(0, 0, 0, 0.2);
+
+    /* =========================================================
+       TYPOGRAPHY
+    ========================================================= */
+    --sans:
+            system-ui,
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            sans-serif;
+
+    --heading:
+            system-ui,
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            Roboto,
+            sans-serif;
+
+    --mono:
+            "IBM Plex Mono",
+            ui-monospace,
+            SFMono-Regular,
+            Consolas,
+            monospace;
+
+    /* =========================================================
+       LAYOUT
+    ========================================================= */
+    --page-width: 1126px;
+    --page-padding: 24px;
+
+    /* =========================================================
+       UI
+    ========================================================= */
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --transition-fast: 160ms ease;
+    --transition-normal: 200ms ease;
+}

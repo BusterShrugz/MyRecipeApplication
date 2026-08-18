@@ -44,23 +44,50 @@ const Home = ({ onSelectRecipe, onCreateRecipe }) => {
     return (
         <main className="home">
 
-            <div className="home-header">
-                <h1>My Pastry Recipes</h1>
+            <header className="home-header">
+                <div className="home-title">
+                    <p className="home-eyebrow">Welcome to my recipe collection!</p>
+                    <h1>Recipes</h1>
+                    <span className="recipe-count">
+                        {filteredRecipes.length} recipes total - so far
+                    </span>
+                    <p className="home-subtitle">
+                        Recipes, ingredients, and instructions all in one place.
+                    </p>
+                </div>
 
                 <PixelButton onClick={onCreateRecipe}>
-                    + Create Recipe
+                    + Add Recipe
                 </PixelButton>
-            </div>
+            </header>
 
-            <CategoryList
-                selectedCategory={selectedCategory}
-                onSelectCategory={setSelectedCategory}
-            />
+            <section className="home-categories">
+                <CategoryList
+                    selectedCategory={selectedCategory}
+                    onSelectCategory={setSelectedCategory}
+                />
+            </section>
 
-            <RecipeList
-                recipes={filteredRecipes}
-                onSelectRecipe={onSelectRecipe}
-            />
+            <section className="home-recipes">
+                <div className="recipe-section-header">
+                    <h2>
+                        {selectedCategory === "All"
+                            ? "All"
+                            : selectedCategory}
+                    </h2>
+
+                    <span className="recipe-count">
+                    {filteredRecipes.length}{" "}
+                        {filteredRecipes.length === 1 ? "recipe" : "recipes"}
+                </span>
+                </div>
+
+                <RecipeList
+                    recipes={filteredRecipes}
+                    onSelectRecipe={onSelectRecipe}
+                />
+            </section>
+
         </main>
     );
 };
