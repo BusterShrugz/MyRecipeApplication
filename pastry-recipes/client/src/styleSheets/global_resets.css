@@ -1,0 +1,89 @@
+/* =========================================================
+   GLOBAL RESET
+========================================================= */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    background: var(--bg);
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.45;
+    letter-spacing: 0.18px;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+p {
+    margin: 0;
+}
+
+/* =========================================================
+   TYPOGRAPHY
+========================================================= */
+h1,
+h2,
+h3 {
+    margin-top: 0;
+    color: var(--text-h);
+    font-family: var(--heading);
+}
+
+h1 {
+    margin-bottom: 0;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -1.68px;
+}
+
+h2 {
+    margin-bottom: 8px;
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    line-height: 1.18;
+    letter-spacing: -0.24px;
+}
+
+h3 {
+    margin-bottom: 0;
+    font-size: 1rem;
+}
+
+/* =========================================================
+   INLINE CODE
+========================================================= */
+code,
+.counter {
+    font-family: var(--mono);
+    color: var(--text-h);
+}
+
+code {
+    padding: 4px 8px;
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+    font-size: 15px;
+    line-height: 135%;
+}

@@ -336,7 +336,7 @@ const RecipeForm = ({ onSubmit, submitting = false }) => {
             <div className="form-row">
                 <div className="form-group">
                     <label htmlFor="category">
-                        Category
+                        Recipe type
                     </label>
 
                     <select
@@ -348,7 +348,7 @@ const RecipeForm = ({ onSubmit, submitting = false }) => {
                         required
                     >
                         <option value="">
-                            Select category
+                            Select recipe type
                         </option>
 
                         {categories.map((categoryName) => (
@@ -364,7 +364,7 @@ const RecipeForm = ({ onSubmit, submitting = false }) => {
 
                 <div className="form-group">
                     <label htmlFor="subcategory">
-                        Subcategory
+                        Recipe sub-type
                     </label>
 
                     <input
@@ -380,7 +380,7 @@ const RecipeForm = ({ onSubmit, submitting = false }) => {
             </div>
 
             <div className="form-group">
-                <label>Yield</label>
+                <label>Servings / Amount made</label>
 
                 <div className="form-row">
                     <input
@@ -511,8 +511,8 @@ const RecipeForm = ({ onSubmit, submitting = false }) => {
                 </div>
             </section>
 
-            <section className="form-section">
-                <h2>Equipment</h2>
+            <section className="form-section form-list-section">
+                <h2>Equipment Needed</h2>
 
                 {equipment.map((item, index) => (
                     <div
@@ -580,7 +580,7 @@ const RecipeForm = ({ onSubmit, submitting = false }) => {
             </section>
 
             <section className="form-section">
-                <h2>Dietary Tags</h2>
+                <h2>Dietary Restrictions</h2>
 
                 <div className="tag-selector">
                     {dietaryTagList.map((tag) => {
@@ -606,7 +606,7 @@ const RecipeForm = ({ onSubmit, submitting = false }) => {
                 </div>
             </section>
 
-            <section className="form-section">
+            <section className="form-section form-list-section">
                 <h2>Ingredients</h2>
 
                 {ingredients.map((ingredient, index) => (
@@ -674,7 +674,7 @@ const RecipeForm = ({ onSubmit, submitting = false }) => {
                 </PixelButton>
             </section>
 
-            <section className="form-section">
+            <section className="form-section form-list-section">
                 <h2>Instructions</h2>
 
                 {instructions.map((instruction, index) => (
@@ -737,7 +737,7 @@ const RecipeForm = ({ onSubmit, submitting = false }) => {
                 <div className="form-row">
                     <div className="form-group">
                         <label htmlFor="source">
-                            Source
+                            Recipe Source
                         </label>
 
                         <input
@@ -753,7 +753,7 @@ const RecipeForm = ({ onSubmit, submitting = false }) => {
 
                     <div className="form-group">
                         <label htmlFor="origin">
-                            Origin
+                            Where's it from?
                         </label>
 
                         <input
@@ -770,7 +770,7 @@ const RecipeForm = ({ onSubmit, submitting = false }) => {
 
                 <div className="form-group">
                     <label htmlFor="notes">
-                        Notes
+                        Recipe Notes
                     </label>
 
                     <textarea

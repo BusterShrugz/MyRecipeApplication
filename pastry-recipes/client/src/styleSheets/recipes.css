@@ -1,0 +1,126 @@
+/* =========================================================
+   RECIPE PAGE
+========================================================= */
+.recipe {
+    text-align: left;
+}
+
+.recipe h1 {
+    text-align: center;
+}
+
+/* =========================================================
+   RECIPE GRID
+========================================================= */
+.recipe-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    width: 100%;
+    padding: 0;
+}
+
+/* =========================================================
+   RECIPE CARD
+========================================================= */
+.recipe-card {
+    position: relative;
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition:
+            border-color 180ms ease,
+            background 180ms ease,
+            transform 180ms ease,
+            box-shadow 180ms ease;
+}
+
+/* Subtle pixel texture */
+.recipe-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+            repeating-linear-gradient(
+                    0deg,
+                    transparent 0,
+                    transparent 3px,
+                    rgba(118, 179, 250, 0.015) 3px,
+                    rgba(118, 179, 250, 0.015) 4px
+            );
+
+    pointer-events: none;
+}
+
+.recipe-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-border);
+    background: var(--surface-hover);
+    box-shadow:
+            0 12px 25px rgba(0, 0, 0, 0.35),
+            0 0 18px rgba(118, 179, 250, 0.08);
+}
+
+.recipe-card h2 {
+    margin-bottom: 6px;
+}
+
+.recipe-category {
+    margin-bottom: 16px;
+    color: var(--accent);
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.75px;
+    text-transform: uppercase;
+}
+
+/* =========================================================
+   CARD ACTION
+========================================================= */
+.recipe-card button {
+    width: 100%;
+    margin-top: 16px;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    transition:
+            border-color var(--transition-fast),
+            color var(--transition-fast),
+            background var(--transition-fast);
+}
+
+.recipe-card button:hover {
+    border-color: var(--accent);
+    background: var(--accent-bg);
+    color: var(--accent);
+}
+
+/* =========================================================
+   INSTRUCTIONS
+========================================================= */
+.instructions {
+    width: 100%;
+    text-align: left;
+}
+
+.instructions h2 {
+    text-align: left;
+}
+
+.instructions ol {
+    margin: 0;
+    padding-left: 2rem;
+
+    text-align: left;
+}
+
+.instructions li {
+    margin-bottom: 0.75rem;
+}

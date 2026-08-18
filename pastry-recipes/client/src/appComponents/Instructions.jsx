@@ -1,7 +1,7 @@
 const Instructions = ({ instructions }) => {
     return (
         <section>
-            <h2>Instructions</h2>
+            <h2>Methods</h2>
 
             <ol>
                 {instructions.map((instruction, index) => (

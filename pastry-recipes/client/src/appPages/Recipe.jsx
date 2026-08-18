@@ -161,7 +161,7 @@ const Recipe = ({recipe, onBack, onDeleted}) => {
                 disabled={deleting}
                 variant="danger"
             >
-                Delete Recipe
+                Delete
             </PixelButton>
 
             {showDeletePrompt && (
@@ -186,7 +186,7 @@ const Recipe = ({recipe, onBack, onDeleted}) => {
                         </button>
 
                         <h2 id="delete-modal-title">
-                            Delete Recipe
+                            Delete
                         </h2>
 
                         <p>
